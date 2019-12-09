@@ -112,3 +112,58 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+/*
+* A generic element component that sets the textContent after creation
+* @param {string} elementStr: The string defining the element to create
+* @param {string} elementText: The text to set as the element.textContent
+* @returns {object} element: The created element
+*/
+function createAndPushWithText(elementStr, elementText, arr) {
+  const element = document.createElement(elementStr);
+  if (elementText.length > 0) {
+    element.textContent = elementText;
+  }
+  arr.push(element);
+}
+
+/*
+* Create the article component
+* @param {object} articleObj: The object containing all textContent data
+* @returns {object} 
+*/
+function articleCreator(articleObj) {
+  const title = articleObj.title;
+  const date = articleObj.date;
+  const firstParagraph = articleobj.firstParagraph;
+  const secondParagraph = articleObj.secondParagraph;
+  const thirdParagraph = articleObj.thirdParagraph;
+  const content = [];
+
+  // outer div
+  const outerDiv = document.createElement('div');
+  outerDiv.classList.add('article');
+
+  // h2 (title)
+  createAndPushWithText('h2', title, content);
+
+  // p (date)
+  createAndPushWithText('p', date, content);
+
+  // p (paragraphs)
+  createAndPushWithText('p', firstParagraph, content);
+  createAndPushWithText('p', secondParagraph, content);
+  createAndPushWithText('p', thirdParagraph, content);
+
+  // span (button)
+  const spanEl = document.createElement('span');
+  spanEl.addEventListener('click', function(event) {
+    const div = document.querySelector('div.article');
+    div.classList.toggle('article-open');
+  });
+
+  // add all content to the outer div
+  content.forEach(element => outerDiv.appendChild(element));
+
+  return outerDiv;
+}
