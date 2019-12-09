@@ -117,7 +117,8 @@ const data = [
 * A generic element component that sets the textContent after creation
 * @param {string} elementStr: The string defining the element to create
 * @param {string} elementText: The text to set as the element.textContent
-* @returns {object} element: The created element
+* @param {Array} arr: The array to push the element to
+* @returns: none
 */
 function createAndPushWithText(elementStr, elementText, arr) {
   const element = document.createElement(elementStr);
@@ -130,7 +131,7 @@ function createAndPushWithText(elementStr, elementText, arr) {
 /*
 * Create the article component
 * @param {object} articleObj: The object containing all textContent data
-* @returns {object} 
+* @returns {object} outerDiv: The div object containing the article content
 */
 function articleCreator(articleObj) {
   const title = articleObj.title;
@@ -159,7 +160,9 @@ function articleCreator(articleObj) {
   const spanEl = document.createElement('span');
   spanEl.classList.add('expandButton');
   spanEl.addEventListener('click', function(event) {
-    const div = document.querySelector('div.article');
+    console.log('click!')
+    const div = spanEl.parentElement;
+    console.log(div)
     div.classList.toggle('article-open');
   });
   content.push(spanEl);
@@ -170,5 +173,14 @@ function articleCreator(articleObj) {
   return outerDiv;
 }
 
-const myDiv = articleCreator(data[0]);
-console.log(myDiv)
+/*
+* Create articles from objects, adding them to the DOM
+* @param {Object} articlesObj: An object containing article objects
+*/
+function articlesCreator(articlesObj, destination) {
+  articlesObj.forEach(article => destination.appendChild(articleCreator(article)));
+}
+
+const articlesDiv = document.querySelector('.articles');
+articlesCreator(data, articlesDiv);
+console.log(articlesDiv)
