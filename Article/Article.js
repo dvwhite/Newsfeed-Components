@@ -135,7 +135,7 @@ function createAndPushWithText(elementStr, elementText, arr) {
 function articleCreator(articleObj) {
   const title = articleObj.title;
   const date = articleObj.date;
-  const firstParagraph = articleobj.firstParagraph;
+  const firstParagraph = articleObj.firstParagraph;
   const secondParagraph = articleObj.secondParagraph;
   const thirdParagraph = articleObj.thirdParagraph;
   const content = [];
@@ -157,13 +157,18 @@ function articleCreator(articleObj) {
 
   // span (button)
   const spanEl = document.createElement('span');
+  spanEl.classList.add('expandButton');
   spanEl.addEventListener('click', function(event) {
     const div = document.querySelector('div.article');
     div.classList.toggle('article-open');
   });
+  content.push(spanEl);
 
   // add all content to the outer div
   content.forEach(element => outerDiv.appendChild(element));
 
   return outerDiv;
 }
+
+const myDiv = articleCreator(data[0]);
+console.log(myDiv)
