@@ -197,7 +197,6 @@ function articlesCreator(articlesObj, destination) {
 
 const articlesDiv = document.querySelector('.articles');
 articlesCreator(data, articlesDiv);
-console.log(articlesDiv)
 
 // New article data
 const zombieData = [
