@@ -141,7 +141,7 @@ function articleCreator(articleObj) {
   const thirdParagraph = articleObj.thirdParagraph;
   const content = [];
 
-  // outer div
+  // Outer div
   const outerDiv = document.createElement('div');
   outerDiv.classList.add('article');
 
@@ -156,10 +156,9 @@ function articleCreator(articleObj) {
   createAndPushWithText('p', secondParagraph, content);
   createAndPushWithText('p', thirdParagraph, content);
 
-  // span (icon)
+  // span
   const spanEl = document.createElement('span');
   let clicked = false;
-  let clickTxt;
   spanEl.textContent = 'Click to Expand';
   
   // Add event listener to the expand button
@@ -169,6 +168,7 @@ function articleCreator(articleObj) {
     const div = spanEl.parentElement;
 
     // Change text on click
+    let clickTxt;
     clicked = !clicked; // toggle
     if (clicked) {
       clickTxt = 'Click to Close';
@@ -181,7 +181,7 @@ function articleCreator(articleObj) {
   });
   content.push(spanEl);
 
-  // add all content to the outer div
+  // Add all content to the outer div
   content.forEach(element => outerDiv.appendChild(element));
 
   return outerDiv;
@@ -199,7 +199,7 @@ const articlesDiv = document.querySelector('.articles');
 articlesCreator(data, articlesDiv);
 console.log(articlesDiv)
 
-// new article data
+// New article data
 const zombieData = [
   {
     title: 'Zombies Can Code?',
