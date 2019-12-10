@@ -122,7 +122,7 @@ const data = [
 */
 function createAndPushWithText(elementStr, elementText, arr) {
   const element = document.createElement(elementStr);
-  if (elementText.length > 0) {
+  if (elementText != '') {
     element.textContent = elementText;
   }
   arr.push(element);
@@ -156,14 +156,26 @@ function articleCreator(articleObj) {
   createAndPushWithText('p', secondParagraph, content);
   createAndPushWithText('p', thirdParagraph, content);
 
-  // span (button)
+  // span (icon)
   const spanEl = document.createElement('span');
+
+  // Add icon to the span
+  const iconEl = document.createElement('i');
+  iconEl.classList.add('fas');
+  iconEl.classList.add('fa-chevron-down')
+  iconEl.style.fontSize = '1.25rem';
+  spanEl.appendChild(iconEl);
+
+  // Add event listener to the expand button
   spanEl.classList.add('expandButton');
+  spanEl.style.transform = 'rotate(0deg)';
+  
   spanEl.addEventListener('click', function(event) {
-    console.log('click!')
     const div = spanEl.parentElement;
     console.log(div)
     div.classList.toggle('article-open');
+    iconEl.style.transform = 'rotate(180deg)';
+    iconEl.style.transition = 'all 0.4s ease-in'
   });
   content.push(spanEl);
 
