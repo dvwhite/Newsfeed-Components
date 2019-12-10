@@ -156,7 +156,6 @@ function articleCreator(articleObj) {
 
   // span
   const spanEl = document.createElement('span');
-  let clicked = false;
   spanEl.textContent = 'Click to Expand';
   
   // Add event listener to the expand button
@@ -164,18 +163,18 @@ function articleCreator(articleObj) {
   
   spanEl.addEventListener('click', function(event) {
     const div = spanEl.parentElement;
+    div.classList.toggle('article-open');
 
     // Change text on click
     let clickTxt;
-    clicked = !clicked; // toggle
-    if (clicked) {
+    const classes = Array.from(div.classList);
+    if (classes.includes('article-open')) {
       clickTxt = 'Click to Close';
     } else {
       clickTxt = 'Click to Expand';
     }
     spanEl.textContent = clickTxt;    
 
-    div.classList.toggle('article-open');
   });
   content.push(spanEl);
 
