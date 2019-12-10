@@ -186,7 +186,9 @@ function articleCreator(articleObj) {
 
 /*
 * Create articles from objects, adding them to the DOM
-* @param {Object} articlesObj: An object containing article objects
+* @param {object} articlesObj: An object containing article objects
+* @param {object} destination: A DOM object where th objects will append to
+* @returns: none
 */
 function articlesCreator(articlesObj, destination) {
   articlesObj.forEach(article => destination.appendChild(articleCreator(article)));
