@@ -158,24 +158,26 @@ function articleCreator(articleObj) {
 
   // span (icon)
   const spanEl = document.createElement('span');
-
-  // Add icon to the span
-  const iconEl = document.createElement('i');
-  iconEl.classList.add('fas');
-  iconEl.classList.add('fa-chevron-down')
-  iconEl.style.fontSize = '1.25rem';
-  spanEl.appendChild(iconEl);
-
+  let clicked = false;
+  let clickTxt;
+  spanEl.textContent = 'Click to Expand';
+  
   // Add event listener to the expand button
   spanEl.classList.add('expandButton');
-  spanEl.style.transform = 'rotate(0deg)';
   
   spanEl.addEventListener('click', function(event) {
     const div = spanEl.parentElement;
-    console.log(div)
+
+    // Change text on click
+    clicked = !clicked; // toggle
+    if (clicked) {
+      clickTxt = 'Click to Close';
+    } else {
+      clickTxt = 'Click to Expand';
+    }
+    spanEl.textContent = clickTxt;    
+
     div.classList.toggle('article-open');
-    iconEl.style.transform = 'rotate(180deg)';
-    iconEl.style.transition = 'all 0.4s ease-in'
   });
   content.push(spanEl);
 
