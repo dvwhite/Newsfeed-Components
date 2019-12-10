@@ -181,7 +181,7 @@ function articleCreator(articleObj) {
   });
   content.push(spanEl);
 
-  // Add all content to the outer div
+  // Add all content to the outer div from array of elements
   content.forEach(element => outerDiv.appendChild(element));
 
   return outerDiv;
