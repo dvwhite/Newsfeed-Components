@@ -35,6 +35,17 @@ let menuItems = [
 */
 
 /*
+* Slide in each element from the left when menu opens
+* @returns: none
+*/
+function menuOpen() {
+  let menuAn = new TimelineMax({paused:true, reversed:true});
+  console.log(menu.childNodes)
+  menuAn.from(menu.childNodes, {duration: 0.75, x: -150, y: 0, opacity: 0, scale: 1.0});
+  menuAn.reversed() ? menuAn.play() : menuAn.reverse();
+}
+
+/*
 * Create a menu component
 * @param {Array} menuItems: The array of items to add to the menu
 * @returns {Object} divEl: The div element containing the menu
@@ -60,10 +71,20 @@ function createMenu(menuItems) {
   const menuButton = document.querySelector('.menu-button');
   menuButton.addEventListener('click', function() {
     divEl.classList.toggle('menu--open');
+    menuOpen()
   });
   
   return divEl;
 }
 
 const headerDiv = document.querySelector('.header');
-headerDiv.appendChild(createMenu(menuItems));
+const menu = createMenu(menuItems);
+headerDiv.appendChild(menu);
+
+// Add gsap to the html head tag
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.2/gsap.min.js"></script>
+const headTag = document.querySelector('head');
+const newScript = document.createElement('script');
+const gsapURL = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.2/gsap.min.js";
+newScript.setAttribute('src', gsapURL);
+headTag.appendChild(newScript);
