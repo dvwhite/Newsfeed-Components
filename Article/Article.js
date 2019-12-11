@@ -115,15 +115,26 @@ const data = [
 * A generic element component that sets the textContent after creation
 * @param {string} elementStr: The string defining the element to create
 * @param {string} elementText: The text to set as the element.textContent
-* @param {Array} arr: The array to push the element to
-* @returns: none
+* @returns: The element created
 */
-function createAndPushWithText(elementStr, elementText, arr) {
+function createElementWithText(elementStr, elementText) {
   const element = document.createElement(elementStr);
   if (elementText != '') {
     element.textContent = elementText;
   }
-  arr.push(element);
+  return element;
+}
+
+/*
+* A generic element component that sets the textContent after creation
+* @param {string} elementStr: The string defining the element to create
+* @param {string} elementText: The text to set as the element.textContent
+* @param {string} arrToPushTo: The array to push the element to
+* @returns: none
+*/
+function createAndPushElement(elementStr, elementText, arrToPushTo) {
+  const element = createElementWithText(elementStr, elementText);
+  arrToPushTo.push(element);
 }
 
 /*
@@ -144,15 +155,17 @@ function articleCreator(articleObj) {
   outerDiv.classList.add('article');
 
   // h2 (title)
-  createAndPushWithText('h2', title, content);
+  createAndPushElement('h2', title, content);
 
   // p (date)
-  createAndPushWithText('p', date, content);
+  const pDate = createElementWithText('p', date);
+  pDate.classList.add('date');
+  content.push(pDate);
 
   // p (paragraphs)
-  createAndPushWithText('p', firstParagraph, content);
-  createAndPushWithText('p', secondParagraph, content);
-  createAndPushWithText('p', thirdParagraph, content);
+  createAndPushElement('p', firstParagraph, content);
+  createAndPushElement('p', secondParagraph, content);
+  createAndPushElement('p', thirdParagraph, content);
 
   // span
   const spanEl = document.createElement('span');
