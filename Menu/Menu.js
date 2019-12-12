@@ -81,10 +81,21 @@ const headerDiv = document.querySelector('.header');
 const menu = createMenu(menuItems);
 headerDiv.appendChild(menu);
 
-// Add gsap to the html head tag
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.2/gsap.min.js"></script>
-const headTag = document.querySelector('head');
-const newScript = document.createElement('script');
-const gsapURL = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.2/gsap.min.js";
-newScript.setAttribute('src', gsapURL);
-headTag.appendChild(newScript);
+// Menu animation variables
+const menuAn = new TimelineMax({paused:true, reversed:true});
+menuAn.from(menu, {duration: 0.75, x: -100, y: 0, opacity: 0, scale: 1.0});
+
+const menuBtn = document.querySelector('.menu-button');
+menuBtn.addEventListener('click', function() {
+  menuOpen(menu, menuAn);
+});
+
+// Reverse menu if you click outside the menu div
+const bodyTag = document.querySelector('body');
+bodyTag.addEventListener('click', function(event) {
+  if (event.target != menu && event.target !== menuBtn && !(menu.contains(event.target))) {
+    if (!menuAn.reversed()) {
+      menuOpen(menu, menuAn);
+    }
+  }
+});
