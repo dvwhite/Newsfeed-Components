@@ -38,11 +38,12 @@ let menuItems = [
 * Slide in each element from the left when menu opens
 * @returns: none
 */
-function menuOpen() {
-  let menuAn = new TimelineMax({paused:true, reversed:true});
-  console.log(menu.childNodes)
-  menuAn.from(menu.childNodes, {duration: 0.75, x: -150, y: 0, opacity: 0, scale: 1.0});
-  menuAn.reversed() ? menuAn.play() : menuAn.reverse();
+function menuOpen(menuDiv, timeLine) {
+  // Remove display: none from the menu div
+  menuDiv.style.display = 'block';
+  
+  // Toggle animation and reveral effects
+  timeLine.reversed() ? timeLine.play() : timeLine.reverse();
 }
 
 /*
@@ -71,7 +72,6 @@ function createMenu(menuItems) {
   const menuButton = document.querySelector('.menu-button');
   menuButton.addEventListener('click', function() {
     divEl.classList.toggle('menu--open');
-    menuOpen()
   });
   
   return divEl;
