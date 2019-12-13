@@ -33,3 +33,69 @@ let menuItems = [
   Step 6: add the menu component to the DOM.
   
 */
+
+/*
+* Slide in each element from the left when menu opens
+* @returns: none
+*/
+function menuOpen(menuDiv, timeLine) {
+  // Remove display: none from the menu div
+  menuDiv.style.display = 'block';
+  
+  // Toggle animation and reveral effects
+  timeLine.reversed() ? timeLine.play() : timeLine.reverse();
+}
+
+/*
+* Create a menu component
+* @param {Array} menuItems: The array of items to add to the menu
+* @returns {Object} divEl: The div element containing the menu
+*/
+function createMenu(menuItems) {
+  // Create elements
+  const divEl = document.createElement('div');
+  const ulEl = document.createElement('ul');
+
+  // Add the 'menu' class to the div
+  divEl.classList.add('menu');
+  
+  // Populate the menu with items from menuItems
+  menuItems.forEach(menuItem => {
+    const newLi = document.createElement('li');
+    newLi.textContent = menuItem;
+    ulEl.appendChild(newLi);
+  });
+
+  // Add ulEl to the div
+  divEl.appendChild(ulEl);
+
+  const menuButton = document.querySelector('.menu-button');
+  menuButton.addEventListener('click', function() {
+    divEl.classList.toggle('menu--open');
+  });
+  
+  return divEl;
+}
+
+const headerDiv = document.querySelector('.header');
+const menu = createMenu(menuItems);
+headerDiv.appendChild(menu);
+
+// Menu animation variables
+const menuAn = new TimelineMax({paused:true, reversed:true});
+menuAn.from(menu, {duration: 0.75, x: -100, y: 0, opacity: 0, scale: 1.0});
+
+const menuBtn = document.querySelector('.menu-button');
+menuBtn.addEventListener('click', function() {
+  menuOpen(menu, menuAn);
+});
+
+// Reverse menu if you click outside the menu div
+const bodyTag = document.querySelector('body');
+bodyTag.addEventListener('click', function(event) {
+  if (event.target != menu && event.target !== menuBtn && !(menu.contains(event.target))) {
+    if (!menuAn.reversed()) {
+      menuOpen(menu, menuAn);
+    }
+  }
+});

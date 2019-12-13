@@ -4,8 +4,7 @@ const data = [
   {
     title: 'Lambda School Students: "We\'re the best!"',
     date: 'Nov 5th, 2018',
-    firstParagraph: `Lucas ipsum dolor sit amet ben twi'lek padmé darth darth darth moff hutt organa twi'lek. Ben amidala secura skywalker lando
-        moff wicket tatooine luke.Solo wampa wampa calrissian yoda moff.Darth grievous darth gonk darth hutt.Darth baba skywalker
+    firstParagraph: `Lucas ipsum dolor sit amet ben twi'lek padmé darth darth darth moff hutt organa twi'lek. Ben amidala secura skywalker lando       moff wicket tatooine luke.Solo wampa wampa calrissian yoda moff.Darth grievous darth gonk darth hutt.Darth baba skywalker
         watto fett jango maul han.Mon ewok sidious sidious lando kenobi grievous gamorrean solo.Yoda wedge utapau darth calamari.
         Hutt calamari darth jabba.Darth dooku amidala organa moff.Boba darth binks solo hutt skywalker dantooine skywalker.Qui - gonn
         jar twi'lek jinn leia jango skywalker mon.`,
@@ -73,8 +72,7 @@ const data = [
   {
     title: 'Professional Software Development in 2019',
     date: 'Jan 1st, 2019',
-    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
-          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor       hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
           Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
 
     secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
@@ -112,3 +110,144 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+/*
+* A generic element component that sets the textContent after creation
+* @param {string} elementStr: The string defining the element to create
+* @param {string} elementText: The text to set as the element.textContent
+* @returns: The element created
+*/
+function createElementWithText(elementStr, elementText) {
+  const element = document.createElement(elementStr);
+  if (elementText != '') {
+    element.textContent = elementText;
+  }
+  return element;
+}
+
+/*
+* A generic element component that sets the textContent after creation
+* @param {string} elementStr: The string defining the element to create
+* @param {string} elementText: The text to set as the element.textContent
+* @param {string} arrToPushTo: The array to push the element to
+* @returns: none
+*/
+function createAndPushElement(elementStr, elementText, arrToPushTo) {
+  const element = createElementWithText(elementStr, elementText);
+  arrToPushTo.push(element);
+}
+
+/*
+* Create the article component
+* @param {object} articleObj: The object containing all textContent data
+* @returns {object} outerDiv: The div object containing the article content
+*/
+function articleCreator(articleObj) {
+  const title = articleObj.title;
+  const date = articleObj.date;
+  const firstParagraph = articleObj.firstParagraph;
+  const secondParagraph = articleObj.secondParagraph;
+  const thirdParagraph = articleObj.thirdParagraph;
+  const content = [];
+
+  // Outer div
+  const outerDiv = document.createElement('div');
+  outerDiv.classList.add('article');
+
+  // h2 (title)
+  createAndPushElement('h2', title, content);
+
+  // p (date)
+  const pDate = createElementWithText('p', date);
+  pDate.classList.add('date');
+  content.push(pDate);
+
+  // p (paragraphs)
+  createAndPushElement('p', firstParagraph, content);
+  createAndPushElement('p', secondParagraph, content);
+  createAndPushElement('p', thirdParagraph, content);
+
+  // span
+  const spanEl = document.createElement('span');
+  spanEl.textContent = 'Click to Expand';
+  
+  // Add event listener to the expand button
+  spanEl.classList.add('expandButton');
+  
+  spanEl.addEventListener('click', function(event) {
+    const div = spanEl.parentElement;
+    div.classList.toggle('article-open');
+
+    // Change text on click
+    let clickTxt;
+    const classes = Array.from(div.classList);
+    if (classes.includes('article-open')) {
+      clickTxt = 'Click to Close';
+    } else {
+      clickTxt = 'Click to Expand';
+    }
+    spanEl.textContent = clickTxt;    
+
+  });
+  content.push(spanEl);
+
+  // Add all content to the outer div from array of elements
+  content.forEach(element => outerDiv.appendChild(element));
+
+  return outerDiv;
+}
+
+/*
+* Create articles from objects, adding them to the DOM
+* @param {object} articlesObj: An object containing article objects
+* @param {object} destination: A DOM object where th objects will append to
+* @returns: none
+*/
+function articlesCreator(articlesObj, destination) {
+  articlesObj.forEach(article => destination.appendChild(articleCreator(article)));
+}
+
+const articlesDiv = document.querySelector('.articles');
+articlesCreator(data, articlesDiv);
+
+// New article data
+const zombieData = [
+  {
+    title: 'Zombies Can Code?',
+    date: 'October 09, 2019',
+    firstParagraph: 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus       brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo       evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem        incessu zomby. The voodoo sacerdos flesh eater, suscitat mortuos comedere carnem virus. Zonbi tattered for solum oculi eorum defunctis go      lum cerebro. Nescio brains an Undead zombies. Sicut malus putrid voodoo horror. Nigh tofth eliv ingdead.',
+
+    secondParagraph: 'Cum horribilem walking dead resurgere de crazed sepulcris creaturis, zombie sicut de grave feeding iride et serpens.             Pestilentia, shaun ofthe dead scythe animated corpses ipsa screams. Pestilentia est plague haec decaying ambulabat mortuos. Sicut zeder        apathetic malus voodoo. Aenean a dolor plan et terror soulless vulnerum contagium accedunt, mortui iam vivam unlife. Qui tardius moveri,       brid eof reanimator sed in magna copia sint terribiles undeath legionis. Alii missing oculis aliorum sicut serpere crabs nostram. Putridi      braindead odores kill and infect, aere implent left four dead.',
+
+    thirdParagraph: 'Lucio fulci tremor est dark vivos magna. Expansis creepy arm yof darkness ulnis witchcraft missing carnem armis Kirkman Moore    and Adlard caeruleum in locis. Romero morbo Congress amarus in auras. Nihil horum sagittis tincidunt, zombie slack-jawed gelida survival       portenta. The unleashed virus est, et iam zombie mortui ambulabunt super terram. Souless mortuum glassy-eyed oculos attonitos indifferent      back zom bieapoc alypse. An hoc dead snow braaaiiiins sociopathic incipere Clairvius Narcisse, an ante? Is bello mundi z?'
+  }
+];
+
+const cheeseData = [
+  {
+    title: 'Cheese',
+    date: 'October 09, 2019',
+    firstParagraph: "St. agur blue cheese cheese strings swiss. Mascarpone manchego melted cheese stinking bishop say cheese macaroni cheese goat     gouda. Roquefort cheeseburger parmesan roquefort pepper jack stinking bishop mozzarella say cheese. Hard cheese squirty cheese.",
+
+    secondParagraph: "Babybel rubber cheese cow. Cow fondue roquefort roquefort cow pecorino camembert de normandie cheese on toast. Cheese and       biscuits fromage frais cheese on toast cream cheese port-salut cheesy feet stinking bishop bavarian bergkase. Say cheese port-salut            camembert de normandie camembert de normandie dolcelatte.",
+
+    thirdParagraph: "Cream cheese bocconcini parmesan. Gouda paneer when the cheese comes out everybody's happy red leicester the big cheese          rubber cheese cauliflower cheese say cheese. Red leicester lancashire when the cheese comes out everybody's happy chalk and cheese             cheesecake rubber cheese paneer stilton. Brie queso who moved my cheese taleggio chalk and cheese babybel fromage frais macaroni cheese.       Cream cheese."
+  }
+];
+
+const pirateData = [
+  {
+    title: 'Pirates!',
+    date: 'October 09, 2019',
+    firstParagraph: "Prow scuttle parrel provost Sail ho shrouds spirits boom mizzenmast yardarm. Pinnace holystone mizzenmast quarter crow's nest    nipperkin grog yardarm hempen halter furl. Swab barque interloper chantey doubloon starboard grog black jack gangway rutters.",
+
+    secondParagraph: "Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her     cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy    black spot yardarm spyglass sheet transom heave to.",
+
+    thirdParagraph: "Trysail Sail ho Corsair red ensign hulk smartly boom jib rum gangway. Case shot Shiver me timbers gangplank crack Jennys tea     cup ballast Blimey lee snow crow's nest rutters. Fluke jib scourge of the seven seas boatswain schooner gaff booty Jack Tar transom            spirits."
+  }
+]
+
+// Add new articles to the DOM
+articlesCreator(zombieData, articlesDiv);
+articlesCreator(cheeseData, articlesDiv);
+articlesCreator(pirateData, articlesDiv);
